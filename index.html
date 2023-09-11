@@ -15,7 +15,7 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   <link rel="stylesheet" href="./s2/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-  <title>Flexible Style Conversion in Latent Space Driven by Natural Language Prompts</title>
+  <title>PromptVC: Flexible Stylistic Voice Conversion in Latent Space Driven by Natural Language Prompts</title>
   <style type="text/css">
     table {
       width: 100%;
@@ -242,7 +242,7 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
         <div class="row align-items-center">
           <div class="col-md-12">
             <h1><a class="text-light">
-              Flexible Style Conversion in Latent Space Driven by Natural Language Prompts</a></h1>
+              PromptVC: Flexible Stylistic Voice Conversion in Latent Space Driven by Natural Language Prompts</a></h1>
             <p>
             </p>
             <div class="row">
@@ -265,10 +265,10 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     <div class="container">
       <div class="row" id="intro">
         <div class="col">
-          <p>This page shows the samples in the paper "<b>Flexible Style Conversion in Latent Space Driven by Natural Language Prompts</b>".
+          <p>This page shows the samples in the paper "<b>PromptVC: Flexible Stylistic Voice Conversion in Latent Space Driven by Natural Language Prompts</b>".
           <h2>Abstract</h2>
-          <div>
-            Background sound is helpful in providing a more immersive experience in real-application voice conversion (VC) scenarios. However, prior research about VC, mainly focusing on clean voices, pay rare attention to VC with background sound. The critical problem for preserving background sound in VC is inevitable speech distortion by the neural separation model and the cascade mismatch between the source separation model and the VC model. In this paper, we propose an end-to-end framework via multi-task learning which sequentially cascades a source separation (SS) module, a bottleneck feature extraction module and a VC module. Specifically, the source separation task explicitly considers critical phase information and limits the distortion caused by the imperfect separation process. The source separation task, the typical VC task and the unified task share a uniform reconstruction loss constrained by joint training to reduce the mismatch between the SS and VC modules. Experimental results demonstrate that our proposed framework significantly outperforms the baseline systems while achieving comparable quality and speaker similarity to the VC models trained with clean data.
+          <div style="text-align: justify;">
+            Style voice conversion aims to transform the style of source speech to a desired style according to real-world application demands. However, the current style voice conversion approach relies on pre-defined labels or reference speech to control the conversion process, which leads to limitations in style diversity or falls short in terms of the intuitive and interpretability of style representation. In this study, we propose PromptVC, a novel style voice conversion approach that employs a latent diffusion model to generate a style vector driven by natural language prompts. Specifically, the style vector is extracted by a style encoder during training, and then the latent diffusion model is trained independently to sample the style vector from noise, with this process being conditioned on natural language prompts. To improve style expressiveness, we leverage HuBERT to extract discrete tokens and replace them with the K-Means center embedding to serve as the linguistic content, which minimizes residual style information. Additionally, we deduplicate the same discrete token and employ a differentiable duration predictor to re-predict the duration of each token, which can adapt the duration of the same linguistic content to different styles. The subjective and objective evaluation results demonstrate the effectiveness of our proposed system.
             </p>
           </div>
         </div>
@@ -276,10 +276,10 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
       <hr>
       <div class="row" id="intro">
         <div class="col">
-          <h2>Proposed Multi-task Framework</h2>
+          <h2>Proposed Approach</h2>
           <div>
-            <img src="./s2/model.drawio.png" width="100%">
-            Fig.1. (a) System overview of the proposed multi-task framework, BN represents bottleneck features. (b) SS module. (c) VC module. The solid line represents the forward propagation, and the dashed line represents which loss functions are used for the module output.
+            <img src="./audios/model.drawio.png" width="100%">
+            The details of our proposed approach. Subfigure (a) is the architecture of PromptVC. The solid line indicates the training stage while the dashed line represents the inference stage. Subfigures (b) and (c) illustrate the process of linguistic unit extraction and the training procedure of the latent diffusion model, respectively.
           </div>
         </div>
       </div>
@@ -289,13 +289,14 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 
 
 
-      <h3>1: Comparison between Proposed Framework and Baseline Systems</h3>
+      <h3>1: Style Voice Conversion by Reference Speech</h3>
       <div class="big-screen">
 
         
         <table class="table">
           <thead>
             <tr>
+              <th></th>
               <th>Source</th>
               <th>Reference</th>
               <th>MixEmo</th>
@@ -306,317 +307,630 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
           <tbody>
 
             <tr>
-              <!-- <th scope="row">F2F</th> -->
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/source/p264_004.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_1399.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b1/p264_004.wav" type="audio/wav">
+                  <source src="./audios/compare/reference/fear468_1399.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b2/p264_004.wav" type="audio/wav">
+                  <source src="./audios/compare/mixemo/fear468_1399.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/proposed/p264_004.wav" type="audio/wav">
+                  <source src="./audios/compare/stylespeech/fear468_1399.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/ub/p264_004.wav" type="audio/wav">
-                </audio>
-              </td>
-            </tr>
-
-            <tr>
-              <!-- <th scope="row">M2F</th> -->
-              <td>
-                <audio controls="">
-                  <source src="./audios/ensemble/source/p245_009.wav" type="audio/wav">
-                </audio>
-              </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/ensemble/b1/p245_009.wav" type="audio/wav">
-                </audio>
-              </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/ensemble/b2/p245_009.wav" type="audio/wav">
-                </audio>
-              </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/ensemble/proposed/p245_009.wav" type="audio/wav">
-                </audio>
-              </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/ensemble/ub/p245_009.wav" type="audio/wav">
+                  <source src="./audios/compare/prposed/fear468_1399.wav" type="audio/wav">
                 </audio>
               </td>
             </tr>
 
             <tr>
-              <!-- <th scope="row">F2M</th> -->
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/source/p361_006.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b1/p361_006.wav" type="audio/wav">
+                  <source src="./audios/compare/reference/anger1195_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b2/p361_006.wav" type="audio/wav">
+                  <source src="./audios/compare/mixemo/anger1195_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/proposed/p361_006.wav" type="audio/wav">
+                  <source src="./audios/compare/stylespeech/anger1195_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/ub/p361_006.wav" type="audio/wav">
+                  <source src="./audios/compare/prposed/anger1195_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_ad_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/reference/news016_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/mixemo/news016_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/stylespeech/news016_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/prposed/news016_94.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_ad_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/reference/news576_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/mixemo/news576_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/stylespeech/news576_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/prposed/news576_94.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/reference/admire35_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/mixemo/admire35_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/stylespeech/admire35_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/prposed/admire35_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_1399.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/reference/alert194_1399.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/mixemo/alert194_1399.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/stylespeech/alert194_1399.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/prposed/alert194_1399.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+            
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/reference/joy211_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/mixemo/joy211_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/stylespeech/joy211_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/prposed/joy211_18284.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_ad_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/reference/part1pb_ad.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/mixemo/part1pb_ad.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/stylespeech/part1pb_ad.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/compare/prposed/part1pb_ad.wav" type="audio/wav">
                 </audio>
               </td>
             </tr>
 
 
             <tr>
-              <!-- <th scope="row">M2M</th> -->
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/source/p270_009.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b1/p270_009.wav" type="audio/wav">
+                  <source src="./audios/compare/reference/disgust356_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b2/p270_009.wav" type="audio/wav">
+                  <source src="./audios/compare/mixemo/disgust356_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/proposed/p270_009.wav" type="audio/wav">
+                  <source src="./audios/compare/stylespeech/disgust356_18284.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/ub/p270_009.wav" type="audio/wav">
+                  <source src="./audios/compare/prposed/disgust356_18284.wav" type="audio/wav">
                 </audio>
               </td>
             </tr>
 
-            <!-- <tr>
-              <th scope="row">M2F</th>
+            <tr>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/source/p245_009.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_ad_94.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b1/p245_009.wav" type="audio/wav">
+                  <source src="./audios/compare/reference/pb8362_94.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/b2/p245_009.wav" type="audio/wav">
+                  <source src="./audios/compare/mixemo/pb8362_94.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/proposed/p245_009.wav" type="audio/wav">
+                  <source src="./audios/compare/stylespeech/pb8362_94.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ensemble/ub/p245_009.wav" type="audio/wav">
+                  <source src="./audios/compare/prposed/pb8362_94.wav" type="audio/wav">
                 </audio>
               </td>
-            </tr> -->
+            </tr>
 
+            
           </tbody>
         </table>
       </div>
       <hr>
 
 
-      <h3>2: Comparison between Proposed Framework and Baseline Systems (Speech quality)</h3>
+      <h3>2: Style Voice Conversion by Natural Language Prompts</h3>
       <div class="big-screen">
-        <table class="table">
-          <thead>
-            
-            <tr>
-              <th scope="row">Target speaker</th>
-              <th scope="row">p294</th>
-              <th scope="row">p334</th>
-              
-            </tr>
-            <tbody>
-            <tr>
-              <td></td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/speech/target/p294_055.wav" type="audio/wav">
-                </audio>
-              </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/speech/target/p334_048.wav" type="audio/wav">
-                </audio>
-              </td>
-            </tbody>
-            </tr>
-          
-          </thead>
-          
-        </table>
         
         <table class="table">
           <thead>
             <tr>
               <th></th>
               <th>Source</th>
-              <th>Baseline1 (Sep)</th>
-              <th>Baseline2 (Sep + Denoise)</th>
-              <th>Proposed</th>
+              <th>Prompts</th>
+              <th>Converted</th>
               <!-- <th>Upper Bound</th> -->
             </tr>
           </thead>
           <tbody>
 
             <tr>
-              <th scope="row">F2F</th>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/speech/source/p361_005.wav" type="audio/wav">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_ad_94.mp3" type="audio/wav">
                 </audio>
               </td>
               <td>
-                <audio controls="">
-                  <source src="./audios/speech/b1/p361_005.wav" type="audio/wav">
-                </audio>
+                一个专业且具有<b>权威性</b>的风格，声音柔和有磁性，成熟男性 <br>
+                (A style that is both <b>professional and authoritative</b>, with a magnetic voice, exuding a sense of mature masculinity)
               </td>
+
               <td>
                 <audio controls="">
-                  <source src="./audios/speech/b2/p361_005.wav" type="audio/wav">
+                  <source src="./audios/prompt/target/diff001_zh_cn_jiuye_ad_94.mp3" type="audio/wav">
                 </audio>
               </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/speech/proposed/p361_005.wav" type="audio/wav">
-                </audio>
-              </td>
-              <!-- <td>
-                <audio controls="">
-                  <source src="./my/A1-WaveGAN/slt/slt_arctic_b0409_gen.wav" type="audio/wav">
-                </audio>
-              </td> -->
+              
             </tr>
 
             <tr>
-              <th scope="row">M2F</th>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/speech/source/p245_002.wav" type="audio/wav">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_ad_94.mp3" type="audio/wav">
                 </audio>
               </td>
               <td>
-                <audio controls="">
-                  <source src="./audios/speech/b1/p245_002.wav" type="audio/wav">
-                </audio>
+                声音动人且具有<b>权威性</b>的女生 <br>
+                (A <b>captivating and professional</b> voice emanating from a lady)
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/speech/b2/p245_002.wav" type="audio/wav">
+                  <source src="./audios/prompt/target/diff002_zh_cn_jiuye_ad_94.mp3" type="audio/wav">
                 </audio>
               </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/speech/proposed/p245_002.wav" type="audio/wav">
-                </audio>
-              </td>
-              <!-- <td>
-                <audio controls="">
-                  <source src="./my/A1-WaveGAN/slt/slt_arctic_b0409_gen.wav" type="audio/wav">
-                </audio>
-              </td> -->
             </tr>
 
             <tr>
-              <th scope="row">F2M</th>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/speech/source/p264_007.wav" type="audio/wav">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_2218.mp3" type="audio/wav">
                 </audio>
               </td>
               <td>
-                <audio controls="">
-                  <source src="./audios/speech/b1/p264_007.wav" type="audio/wav">
-                </audio>
+                妙龄少女流利地说，有<b>质疑</b>的语气，情感上则是有些<b>惊讶</b> <br>
+                (A young girl spoke fluently, with a <b>questioning tone</b>, and was emotionally a little <b>surprised</b>)
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/speech/b2/p264_007.wav" type="audio/wav">
+                  <source src="./audios/prompt/target/diff016_zh_cn_jiuye_db_2218.mp3" type="audio/wav">
                 </audio>
               </td>
-              <td>
-                <audio controls="">
-                  <source src="./audios/speech/proposed/p264_007.wav" type="audio/wav">
-                </audio>
-              </td>
-              <!-- <td>
-                <audio controls="">
-                  <source src="./my/A1-WaveGAN/slt/slt_arctic_b0409_gen.wav" type="audio/wav">
-                </audio>
-              </td> -->
             </tr>
 
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_ad_94.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <b>慢慢地</b>说，语气低沉平静, 青年男性音色 <br>
+                (Speak <b>slowly</b>, in a low and calm tone, with a young male voice)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff007_zh_cn_jiuye_ad_94.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+            
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_222.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                女性音色讲话很有气无力，很不认可<b>冷漠</b>，显得特别<b>厌恶</b> <br>
+                (A female voice is very weak in speech, very <b>disapproving</b> of indifference, and seems particularly <b>disgusting</b>)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff009_zh_cn_jiuye_db_222.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
 
             <tr>
-              <th scope="row">M2M</th>
+              <th scope="row"></th>
               <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_didi_db_1187.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                青年男性声音<b>高昂</b>，语气冷酷，显得有点<b>愤怒</b>的样子<br>
+                (A young man's voice is <b>high</b>, his tone was cold, and he looked a little <b>angry</b>)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff014_zh_cn_didi_db_1187.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
 
+            <tr>
+              <th scope="row"></th>
+              <td>
                 <audio controls="">
-                  <source src="./audios/speech/source/p270_003.wav" type="audio/wav">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_1399.mp3" type="audio/wav">
                 </audio>
               </td>
               <td>
-                <audio controls="">
-                  <source src="./audios/speech/b1/p270_003.wav" type="audio/wav">
-                </audio>
+                青年男性带着<b>颤抖</b>的语气，语气忐忑且惊慌，表现出<b>害怕</b>的样子<br>
+                (A young male speak with a <b>trembling</b> tone, worried and panicked, showing <b>fear</b>)
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/speech/b2/p270_003.wav" type="audio/wav">
+                  <source src="./audios/prompt/target/diff003_zh_cn_jiuye_db_1399.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_2206.mp3" type="audio/wav">
                 </audio>
               </td>
               <td>
+                妙龄女性说话状态是<b>气愤的</b>，说话人的语气很强硬辱骂，有仇恨的情绪<br>
+                (A young lady is <b>angry</b> when she speaks, and the speaker's tone is <b>strong</b>, abusive, and hateful)
+              </td>
+              <td>
                 <audio controls="">
-                  <source src="./audios/speech/proposed/p270_003.wav" type="audio/wav">
+                  <source src="./audios/prompt/target/diff011_zh_cn_jiuye_db_2206.mp3" type="audio/wav">
                 </audio>
               </td>
-              <!-- <td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
                 <audio controls="">
-                  <source src="./my/A1-WaveGAN/slt/slt_arctic_b0409_gen.wav" type="audio/wav">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_18284.mp3" type="audio/wav">
                 </audio>
-              </td> -->
+              </td>
+              <td>
+                青年男性<b>气愤</b>的情绪，表达了说话人的<b>失望和愤懑</b><br>
+                (The <b>angry</b> emotion of a young man expresses the speaker's <b>disappointment and resentment</b>)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff006_zh_cn_jiuye_db_18284.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_didi_db_1194.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                成熟男性<b>缓慢</b>的说，语气很<b>威严</b><br>
+                (A mature man said <b>slowly</b>, with a very <b>dignified</b> tone)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff012_zh_cn_didi_db_1194.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+            
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_2202.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                说话状态是<b>笑的</b>，说话人的语气很轻快烂漫，有<b>欢乐</b>的情绪，年轻女性音色<br>
+                (The speaker is <b>smiling</b>, the speaker's tone is brisk and cheerful, the mood is <b>joyful</b>, and the voice is young and female)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff010_zh_cn_jiuye_db_2202.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_didi_db_1180.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                青年男性说话流利，语气果断且冷酷，表达出内心的<b>惊讶</b><br>
+                (The young male spoke fluently, with a decisive and cold tone, expressing his inner <b>surprise</b>)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff015_zh_cn_didi_db_1180.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            
+
+            
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_2245.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                带有<b>哭腔</b>的说，有质疑慌张的语气，情感上则是<b>惧怕</b>的，年轻女性的音色<br>
+                (A <b>tearful tone</b>, with a questioning and panic tone, and was emotionally <b>frightened</b>, with the timbre of a young woman)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff018_zh_cn_jiuye_db_2245.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_didi_db_1100.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                语速<b>缓慢</b>，字字清晰，语气忐忑不安，表现出<b>难过</b>的样子，青年男性<br>
+                (Speech is <b>slow</b>, words are clear, tone is uneasy, and looks <b>sad</b>, young male)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff019_zh_cn_didi_db_1100.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_2205.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                年轻女性<b>高声</b>地说，这一句的语气是否定激动的，表达了<b>气愤</b>的情感<br>
+                (Young woman said <b>loudly</b>, the tone of this sentence is negative and excited, expressing the emotion of <b>anger</b>)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff017_zh_cn_jiuye_db_2205.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_jiuye_db_2241.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                声音<b>低沉</b>，一字一顿，且具有<b>权威性</b>的成熟男生<br>
+                (A mature boy with a <b>low</b> voice, precise wording, and <b>authoritativeness</b>)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff020_zh_cn_jiuye_db_2241.mp3" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/source/zh-cn_didi_db_112.mp3" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                成熟男性，声音柔和有磁性，以<b>专业权威</b>的风格说<br>
+                (Mature male, soft and magnetic voice, speaking in a <b>professional and authoritative</b> style)
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/prompt/target/diff025_zh_cn_didi_db_112.mp3" type="audio/wav">
+                </audio>
+              </td>
             </tr>
 
           </tbody>
@@ -632,108 +946,221 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
           <thead>
             <tr>
               <th></th>
+              <th>Source </th>
+              <th>Reference</th>
               <th>Proposed</th>
-              <th>Without SE Loss</th>
-              <th>Without VC Loss</th>
-              <th>Without Joint Training</th>
+              <th>Without Prosody</th>
+              <th>Variants with PPG</th>
             </tr>
           </thead>
           <tbody>
 
             <tr>
-              <th scope="row">Sample 1</th>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/proposed/p245_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_ad_94.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nobgm/p245_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/ref/ref1.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/novc/p245_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/proposed/ref1_94.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nounion/p245_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/wo_prosody/ref1_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ppg/ref1_94.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+            
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_1498.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ref/zh-cn_didi_anger_1195.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/proposed/didi_anger_1195_zh_cn_jiuye_db_1498.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/wo_prosody/didi_anger_1195_zh_cn_jiuye_db_1498.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ppg/didi_anger_1195_zh_cn_jiuye_db_1498.wav" type="audio/wav">
                 </audio>
               </td>
             </tr>
 
             <tr>
-              <th scope="row">Sample 2</th>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/proposed/p245_002.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_18294.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nobgm/p245_002.wav" type="audio/wav">
+                  <source src="./audios/ablation/ref/zh-cn_didi_fear_468.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/novc/p245_002.wav" type="audio/wav">
+                  <source src="./audios/ablation/proposed/didi_fear_468_zh_cn_jiuye_db_18294.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nounion/p245_002.wav" type="audio/wav">
+                  <source src="./audios/ablation/wo_prosody/didi_fear_468_zh_cn_jiuye_db_18294.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ppg/didi_fear_468_zh_cn_jiuye_db_18294.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+            
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_ad_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ref/ref2.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/proposed/ref2_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/wo_prosody/ref2_94.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ppg/ref2_94.wav" type="audio/wav">
                 </audio>
               </td>
             </tr>
 
             <tr>
-              <th scope="row">Sample 3</th>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/proposed/p270_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_1481.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nobgm/p270_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/ref/zh-cn_didi_alert_194.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/novc/p270_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/proposed/didi_alert_194_zh_cn_jiuye_db_1481.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nounion/p270_001.wav" type="audio/wav">
+                  <source src="./audios/ablation/wo_prosody/didi_alert_194_zh_cn_jiuye_db_1481.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ppg/didi_alert_194_zh_cn_jiuye_db_1481.wav" type="audio/wav">
                 </audio>
               </td>
             </tr>
+
             <tr>
-              <th scope="row">Sample 4</th>
+              <th scope="row"></th>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/proposed/p270_004.wav" type="audio/wav">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_1490.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nobgm/p270_004.wav" type="audio/wav">
+                  <source src="./audios/ablation/ref/zh-cn_yidaosusu_pb_8362.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/novc/p270_004.wav" type="audio/wav">
+                  <source src="./audios/ablation/proposed/yidaosusu_pb_8362_zh_cn_jiuye_db_1490.wav" type="audio/wav">
                 </audio>
               </td>
               <td>
                 <audio controls="">
-                  <source src="./audios/ablation/nounion/p270_004.wav" type="audio/wav">
+                  <source src="./audios/ablation/wo_prosody/yidaosusu_pb_8362_zh_cn_jiuye_db_1490.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ppg/yidaosusu_pb_8362_zh_cn_jiuye_db_1490.wav" type="audio/wav">
                 </audio>
               </td>
             </tr>
+
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/source/zh-cn_jiuye_db_1481.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ref/zh-cn_didi_joy_211.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/proposed/didi_joy_211_zh_cn_jiuye_db_1481.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/wo_prosody/didi_joy_211_zh_cn_jiuye_db_1481.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td>
+                <audio controls="">
+                  <source src="./audios/ablation/ppg/didi_joy_211_zh_cn_jiuye_db_1481.wav" type="audio/wav">
+                </audio>
+              </td>
+            </tr>
+
+            
+            
+            
 
           </tbody>
         </table>
@@ -747,7 +1174,7 @@ jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     <div class="container">
       <p class="text-center">
         <small>
-          Flexible Style Conversion in Latent Space Driven by Natural Language Prompts
+          PromptVC: Flexible Stylistic Voice Conversion in Latent Space Driven by Natural Language Prompts
           <br>
           <a class="text-light"><strong>Jixun Yao</strong></a> |
           yaojx@mail.nwpu.edu.cn
